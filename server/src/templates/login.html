@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notificación de Inicio de Sesión</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h2 {
+            color: #333333;
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: #666666;
+            margin-bottom: 10px;
+        }
+
+        .confirm_button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            background-color: #4caf50;
+            color: #ffffff;
+            border: 2px solid #4caf50;
+            border-radius: 5px;
+            margin-right: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .confirm_button:hover {
+            background-color: #45a049;
+        }
+
+        .deny_button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            background-color: #ff5555;
+            color: #ffffff;
+            border: 2px solid #ff5555;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .deny_button:hover {
+            background-color: #ff3333;
+        }
+
+        .warning_message {
+            color: #FF0000;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Inicio de Sesión Exitoso</h2>
+        <p>Has iniciado sesión correctamente en tu cuenta.</p>
+        <p>Usuario: ${user}</p>
+        <p>Fecha y Hora: ${date}</p>
+
+        <!-- Mensaje para usuarios que no han iniciado sesión -->
+        <p class="warning_message">Si no has iniciado sesión, por favor, confírmanos tu identidad.</p>
+
+        <!-- Botones para acción adicional -->
+        <a href="https://www.google.com" class="confirm_button">He sido yo</a>
+        <a href="https://www.google.com" class="deny_button">No he sido yo</a>
+    </div>
+</body>
+
+</html>

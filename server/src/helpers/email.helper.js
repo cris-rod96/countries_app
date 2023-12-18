@@ -1,7 +1,6 @@
 import nodemailer from "nodemailer";
 import env from "../config/env.config.js";
 import fs from "fs";
-import exp from "constants";
 
 const { GMAIL_SECRET_EMAIL, GMAIL_SECRET_PASSWORD } = env;
 
@@ -36,6 +35,29 @@ const welcomeAndValidate = async (emailTo, validationCode) => {
   }
 };
 
+const loginNotification = async (emailTo, user, date) => {
+  try {
+    const html = fs
+      .readFileSync("./src/templates/login.html")
+      .toString()
+      .replace("${user}", user)
+      .replace("${date}", date);
+
+    const mailOptions = {
+      from: GMAIL_SECRET_EMAIL,
+      to: emailTo,
+      subject: "Notificación de Inicio de Sesión",
+      html,
+    };
+
+    await transporter.sendMail(mailOptions);
+    return true;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
 export default {
   welcomeAndValidate,
+  loginNotification,
 };

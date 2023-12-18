@@ -27,12 +27,11 @@ const model = (sequelize) => {
 
       isChecked: {
         type: DataTypes.BOOLEAN,
-        allowNull: false,
+        defaultValue: false,
       },
       receivedAt: {
         type: DataTypes.DATE,
         defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
-        allowNull: false,
       },
     },
     {

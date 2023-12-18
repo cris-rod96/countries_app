@@ -2,6 +2,7 @@ import connection from "../../database/connection.js";
 import helpers from "../../helpers/index.helpers.js";
 const { verifyPassword } = helpers.bcryptHelpers;
 const { generateToken } = helpers.jwtHelpers;
+const { loginNotification } = helpers.emailHelper;
 const { User } = connection.models;
 
 const login = async (req, res) => {
@@ -21,7 +22,11 @@ const login = async (req, res) => {
             id: user.id,
             email: user.email,
           });
-
+          await loginNotification(
+            email,
+            user.name,
+            new Date().toLocaleString()
+          );
           return res.status(200).json({
             user: {
               id: user.id,
