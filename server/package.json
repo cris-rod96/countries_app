@@ -5,16 +5,21 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon",
+    "server": "nodemon",
+    "api": "json-server --watch api/db.json -p 5000 -q",
+    "start": "concurrently \"npm run server\" \"npm run api\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Cristhian Rodríguez",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.6.2",
     "bcrypt": "^5.1.1",
+    "concurrently": "^8.2.2",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
+    "json-server": "^0.17.4",
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
     "nodemailer": "^6.9.7",

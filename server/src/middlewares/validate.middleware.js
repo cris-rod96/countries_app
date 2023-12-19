@@ -5,7 +5,7 @@ import helpers from "../helpers/index.helpers.js";
 const { User } = connection.models;
 const { jwtHelpers } = helpers;
 const isValidToken = async (req = request, res = response, next) => {
-  const token = req.header["x-token"];
+  const token = req.headers["x-token"];
 
   if (!token)
     return res

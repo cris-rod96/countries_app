@@ -27,3 +27,5 @@ const main = async (req, res) => {
     return res.status(500).json({ message });
   }
 };
+
+export default main;
