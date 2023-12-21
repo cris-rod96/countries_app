@@ -16,3 +16,12 @@ a {
 img {
   max-width: 100%;
 }
+
+button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  color: white;
+  font-size: 17px;
+  background-color: transparent;
+}
