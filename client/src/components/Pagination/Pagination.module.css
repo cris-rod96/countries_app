@@ -1,0 +1,26 @@
+.pagination {
+  display: flex;
+  gap: 10px;
+}
+.pages {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  font-size: 20px;
+}
+.pages > span:nth-child(odd) {
+  font-weight: 500;
+  font-size: 24px;
+}
+
+.btnArrow {
+  font-size: 30px;
+  cursor: pointer;
+
+  color: rgb(41, 48, 80);
+}
+
+.btnArrow:disabled {
+  color: rgb(109, 119, 155);
+}
