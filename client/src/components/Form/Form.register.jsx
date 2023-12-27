@@ -7,7 +7,7 @@ import {
 import { faArrowLeft, faLock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRegisterForm } from "../../hooks/useRegisterForm";
-import { Toast } from "../Toast/Toast";
+
 export const FormRegister = (props) => {
   const { styled, register, setRegister, showPassword, setShowPassword } =
     props;
@@ -108,12 +108,10 @@ export const FormRegister = (props) => {
 
           <button className={`${styled.btnLogin}`}>Registrarme</button>
         </form>
-        {<Toast />}
       </div>
       <div className={styled.containerPoster}>
         <img src={"activities.png"} alt="" className={styled.activities} />
       </div>
-      {message && alert(message)}
     </div>
   );
 };

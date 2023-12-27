@@ -1,12 +1,22 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Routing } from "./routes/Routes";
 import { Nav } from "./components/Nav/Nav";
 import { useEffect, useState } from "react";
 import services from "./services/countries.services";
-import { Footer } from "./components/Footer/Footer";
+import cookies from "./utils/cookies";
 function App() {
-  const { pathname } = useLocation();
   const [countries, setCountries] = useState([]);
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const token = cookies.getCookie("x-token");
+
+  useEffect(() => {
+    if (!token && !pathname.includes("/validation")) {
+      navigate("/");
+      return;
+    }
+  }, []);
+
   useEffect(() => {
     async function getCountries() {
       const data = await services.getCountries();
@@ -19,6 +29,7 @@ function App() {
     const data = await services.getByName(value);
     setCountries(data.countries);
   };
+
   return (
     <>
       {pathname !== "/" && <Nav handleSearch={handleSearch} />}{" "}

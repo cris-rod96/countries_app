@@ -2,18 +2,18 @@ import { useEffect, useState } from "react";
 import styled from "./Home.module.css";
 import services from "../../services/countries.services";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faClose,
-  faGlobe,
-  faLocationDot,
-  faPowerOff,
-} from "@fortawesome/free-solid-svg-icons";
+import { faClose, faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { Cards } from "../../components/Cards/Cards";
 import { Footer } from "../../components/Footer/Footer";
+import storage from "../../utils/storage";
 export const Home = (props) => {
   const { countries } = props;
   const [showDetail, setShowDetail] = useState(false);
   const [country, setCountry] = useState({});
+
+  useEffect(() => {
+    storage.saveStorage(countries);
+  }, []);
 
   const handleCountry = (id) => {
     setCountry(countries.find((country) => country.id === id));

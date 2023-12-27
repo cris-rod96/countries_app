@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { validate } from "../utils/validation";
-import handleLogin from "../services/user.services.js";
+import userServices from "../services/user.services.js";
 import cookies from "../utils/cookies.js";
 import storage from "../utils/storage.js";
 import { useNavigate } from "react-router-dom";
@@ -26,9 +26,12 @@ export const useLoginForm = () => {
     setLoading(true);
     if (!Object.values(credentials).some((data) => data === "")) {
       try {
-        const data = await handleLogin("/auth/login", credentials);
+        const data = await userServices.handleSubmit(
+          "/auth/login",
+          credentials
+        );
         const { user, token } = data;
-        cookies.saveCookie(token);
+        cookies.saveCookie("x-token", token);
         storage.saveStorage("user", user);
         navigate("/home");
       } catch (error) {
@@ -36,7 +39,6 @@ export const useLoginForm = () => {
         setError(message);
       }
     } else {
-      alert("entra");
       setError("Los campos son obligatorios");
     }
     setLoading(false);

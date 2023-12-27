@@ -11,12 +11,13 @@ import {
   faArrowRight,
   faLock,
 } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FormLogin } from "../../components/Form/Form.login";
 import { FormRegister } from "../../components/Form/Form.register";
 export const Landing = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [register, setRegister] = useState(false);
+
   return (
     <div className={styled.containerLanding}>
       <div className={styled.contentLanding}>

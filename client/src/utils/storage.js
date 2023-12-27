@@ -6,7 +6,12 @@ const getStorage = (key) => {
   return JSON.parse(localStorage.getItem(key));
 };
 
+const removeStorage = (key) => {
+  localStorage.removeItem(key);
+};
+
 export default {
   saveStorage,
   getStorage,
+  removeStorage,
 };
