@@ -1,141 +1,128 @@
-.modal {
+.containerModal {
   position: absolute;
   width: 100%;
   height: 100%;
+  background-color: rgba(255, 255, 255, 0.9);
   top: 0;
-  left: 0;
-  background-color: rgba(255, 255, 255, 0.6);
+
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.contentModal {
-  width: 1200px;
+.modal {
+  width: 1000px;
   background-color: white;
-  padding: 10px;
-  border: 1px solid whitesmoke;
-  border-radius: 12px;
-  box-shadow: 0px 0px 10px whitesmoke;
-
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgb(235, 231, 231);
 }
 
-.formModal {
+.modalHeader {
   width: 100%;
-  height: 100%;
+  height: 80px;
+  background-color: #293050;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.formActivity {
-  width: 90%;
+.modalHeader > h2 {
+  color: white;
+}
+
+.btnClose {
+  height: 100%;
+  position: absolute;
+  right: 20px;
+  color: white;
+
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.modalBody {
+  width: 800px;
   margin: 20px auto;
+}
+
+.form {
+  width: 100%;
   display: grid;
   gap: 20px;
 }
 
-.boxGroup {
+.formGroup {
   display: grid;
   gap: 10px;
 }
+
 .formLabel {
   font-size: 18px;
 }
-
-.formGroup {
+.inputGroup {
   display: flex;
   border: 1px solid lightgrey;
-  border-radius: 12px;
+  border-radius: 14px;
+  overflow: hidden;
 }
 
-.boxIcon {
-  width: 50px;
+.inputGroup:focus-within {
+  box-shadow: 0px 0px 10px lightgrey;
+}
+.inputIcon {
+  width: 60px;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 16px;
   background-color: #293050;
   color: white;
-  border-top-left-radius: 12px;
-  border-bottom-left-radius: 12px;
 }
 
-.formField {
+.inputField {
   width: 100%;
   height: 50px;
   border: none;
   outline: none;
-  border-top-right-radius: 12px;
-  border-bottom-right-radius: 12px;
+  padding-left: 10px;
+  font-size: 18px;
+}
 
+select {
   cursor: pointer;
 }
 
-.boxButton {
+.buttons {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 20px;
 }
-.btnSave {
-  background-color: #293050;
-  padding: 10px 20px;
+.btn {
+  width: 100%;
+  height: 50px;
+  cursor: pointer;
   display: flex;
   justify-content: center;
-  gap: 5px;
-  cursor: pointer;
-  border: 1px solid #293050;
-  border-radius: 8px;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+  border-radius: 12px;
+}
+.btnReset {
+  background-color: #383737;
+}
+
+.btnReset:hover {
+  box-shadow: 0px 0px 10px #383737;
+}
+
+.btnSave {
+  background-color: #293050;
 }
 
 .btnSave:hover {
-  background-color: #333b61;
   box-shadow: 0px 0px 10px #293050;
-}
-
-.cardModal {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.card {
-  width: 400px;
-  padding: 20px;
-  background-color: rgb(253, 247, 247);
-  border: 1px solid rgb(253, 247, 247);
-  border-radius: 12px;
-  box-shadow: 0px 0px 10px rgb(253, 247, 247);
-  display: grid;
-  gap: 20px;
-}
-.cardInfo {
-  display: grid;
-  align-items: center;
-  justify-content: center;
-}
-.cardInfo > p {
-  text-align: center;
-  display: grid;
-}
-
-.infoTitle {
-  font-size: 18px;
-  font-weight: bold;
-}
-.infoValue {
-  font-size: 16px;
-}
-
-.countries {
-  display: grid;
-  gap: 10px;
-  margin-top: 10px;
-  align-items: center;
-  justify-content: center;
-}
-
-.country {
-  display: flex;
-  gap: 5px;
-  align-items: center;
-  justify-content: center;
 }

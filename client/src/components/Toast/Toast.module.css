@@ -1,0 +1,59 @@
+.containerToast {
+  position: absolute;
+  top: 10px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.toast {
+  width: 400px;
+  height: 50px;
+  color: white;
+  display: flex;
+  overflow: hidden;
+  border-radius: 10px;
+  position: absolute;
+  top: -100px;
+  transition: all 0.5s linear;
+  z-index: 1000;
+}
+
+.iconToast {
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+}
+.messageToast {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+}
+
+.messageToast > p {
+  font-size: 16px;
+}
+
+.toastError {
+  background-color: rgb(170, 7, 7);
+}
+
+.toastError > .iconToast {
+  background-color: rgb(139, 9, 9);
+}
+
+.toastSuccess {
+  background-color: rgb(4, 124, 4);
+}
+
+.toastSuccess > .iconToast {
+  background-color: rgb(3, 90, 3);
+}
+
+.showToast {
+  top: 10px;
+}

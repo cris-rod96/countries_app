@@ -6,9 +6,14 @@ import {
   faArrowDown,
   faArrowDown19,
   faCaretDown,
+  faSpinner,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
-export const Table = () => {
+import { useEffect, useState } from "react";
+export const Table = (props) => {
+  const { activities, handleUpdate, setCurrentActivity, handleModal } = props;
+  const [updating, setUpdating] = useState(false);
+  const [idUpdate, setIdUpdate] = useState("");
   const difficulties = {
     1: {
       css: styled.easy,
@@ -31,53 +36,23 @@ export const Table = () => {
       value: "Experto",
     },
   };
-  const activities = [
-    {
-      id: "1",
-      description: "Paseo en bicicleta",
-      difficulty: 1,
-      duration: 3,
-      season: "Invierno",
-      isCompleted: false,
-      countries: ["Ecuador", "Colombia"],
-    },
-    {
-      id: "2",
-      description: "Caminata en montaña",
-      difficulty: 2,
-      duration: 3,
-      season: "Verano",
-      isCompleted: false,
-      countries: ["Ecuador", "Colombia"],
-    },
-    {
-      id: "3",
-      description: "Salto en paracaídas",
-      difficulty: 3,
-      duration: 3,
-      season: "Invierno",
-      isCompleted: false,
-      countries: ["Ecuador", "Colombia"],
-    },
-    {
-      id: "4",
-      description: "Buceo",
-      difficulty: 4,
-      duration: 3,
-      season: "Invierno",
-      isCompleted: false,
-      countries: ["Ecuador", "Colombia"],
-    },
-    {
-      id: "5",
-      description: "Entender mujeres",
-      difficulty: 5,
-      duration: 3,
-      season: "Invierno",
-      isCompleted: false,
-      countries: ["Ecuador", "Colombia"],
-    },
-  ];
+
+  const updateStatus = (id) => {
+    setUpdating(true);
+    setIdUpdate(id);
+    setTimeout(() => {
+      setUpdating(false);
+      handleUpdate(id);
+    }, 1500);
+  };
+
+  const selectActivity = (activity) => {
+    setCurrentActivity({
+      ...activity,
+    });
+    handleModal();
+  };
+
   return (
     <table className={`${styled.table}`}>
       <thead className={styled.thead}>
@@ -94,34 +69,50 @@ export const Table = () => {
         </tr>
       </thead>
       <tbody className={styled.tbody}>
-        {activities.map((activity, idx) => (
-          <tr key={idx}>
-            <td>{activity.description}</td>
-            <td className={difficulties[activity.difficulty].css}>
-              {difficulties[activity.difficulty].value}
-            </td>
-            <td>{activity.duration} hrs.</td>
-            <td>{activity.season}</td>
-            <td className={styled.pills}>
-              {activity.countries.map((name, idx) => (
-                <span key={idx} className={styled.pill}>
-                  {name}
-                </span>
-              ))}
-            </td>
-            <td>{activity.isCompleted}</td>
-            <td className={styled.buttons}>
-              <button className={`${styled.btn} ${styled.btnEdit}`}>
-                <FontAwesomeIcon icon={faEdit} />
-              </button>
-              <button className={`${styled.btn} ${styled.btnDelete}`}>
-                <FontAwesomeIcon icon={faTrash} />
-              </button>
-            </td>
-          </tr>
-        ))}
+        {activities &&
+          activities.map((activity, idx) => (
+            <tr key={idx}>
+              <td>{activity.description}</td>
+              <td className={difficulties[activity.difficulty].css}>
+                {difficulties[activity.difficulty].value}
+              </td>
+              <td>{activity.duration} hrs.</td>
+              <td>{activity.season}</td>
+              <td className={styled.pills}>
+                {activity.Countries &&
+                  activity.Countries.map((country, idx) => (
+                    <span key={idx} className={styled.pill}>
+                      {country.commonName}
+                    </span>
+                  ))}
+              </td>
+              <td>
+                {updating && idUpdate === activity.id ? (
+                  <FontAwesomeIcon icon={faSpinner} spinPulse />
+                ) : (
+                  <input
+                    type="checkbox"
+                    checked={activity.isCompleted}
+                    disabled={activity.isCompleted}
+                    onChange={() => updateStatus(activity.id)}
+                    className={styled.inputCheck}
+                  />
+                )}
+              </td>
+              <td className={styled.buttons}>
+                <button className={`${styled.btn} ${styled.btnEdit}`}>
+                  <FontAwesomeIcon
+                    icon={faEdit}
+                    onClick={() => selectActivity(activity)}
+                  />
+                </button>
+                <button className={`${styled.btn} ${styled.btnDelete}`}>
+                  <FontAwesomeIcon icon={faTrash} />
+                </button>
+              </td>
+            </tr>
+          ))}
       </tbody>
-      <tfoot></tfoot>
     </table>
   );
 };

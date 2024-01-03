@@ -12,9 +12,16 @@
 }
 .containerTable {
   width: 80%;
-  margin: 10px auto;
+  margin: 50px auto;
   display: flex;
+  flex-direction: column;
   gap: 15px;
+  position: relative;
+}
+
+.buttonBox {
+  display: flex;
+  justify-content: flex-end;
   position: relative;
 }
 

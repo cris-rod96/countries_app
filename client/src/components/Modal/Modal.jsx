@@ -6,12 +6,20 @@ import {
   faClose,
   faEarth,
   faList,
+  faRefresh,
   faSave,
   faSliders,
 } from "@fortawesome/free-solid-svg-icons";
 import storage from "../../utils/storage";
 import { useEffect, useState } from "react";
-export const Modal = () => {
+
+import activityService from "../../services/activities.services";
+export const Modal = ({
+  handleModal,
+  currentActivity,
+  handleToast,
+  setToast,
+}) => {
   const countries = storage.getStorage("countries");
 
   const [activity, setActivity] = useState({
@@ -22,106 +30,177 @@ export const Modal = () => {
     countries: [],
   });
 
+  const difficulties = {
+    1: "Fácil",
+    2: "Moderado",
+    3: "Intermedio",
+    4: "Díficil",
+    5: "Experto",
+  };
+
+  const resetForm = () => {
+    setActivity({
+      description: "",
+      difficulty: "",
+      duration: "",
+      season: "",
+      countries: [],
+    });
+  };
+
+  const setActivityCountries = (countries, value) => {
+    return !countries.includes(value) ? [...countries, value] : [...countries];
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setActivity({
       ...activity,
-      [name]: value,
+      [name]:
+        name === "countries"
+          ? setActivityCountries(activity.countries, value)
+          : value,
     });
   };
 
-  const handleCountry = (e) => {
-    const { value } = e.target;
-
-    if (activity.countries.length > 0) {
-      if (!activity.countries.includes(value)) {
-        setActivity({
-          ...activity,
-          countries: [...activity.countries, value],
-        });
+  const isValidForm = (values) => {
+    let isValid = true;
+    for (let value of values) {
+      if (value.length === 0) {
+        isValid = false;
+        break;
       }
+    }
+    return isValid;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const values = Object.values(activity);
+    if (isValidForm(values)) {
+      const response = await activityService.createActivity(activity);
+      setToast({
+        ...response,
+      });
+      resetForm();
     } else {
-      setActivity({
-        ...activity,
-        countries: [...activity.countries, value],
+      setToast({
+        type: "error",
+        message: "Todos los campos son obligatorios",
       });
     }
+    handleToast();
   };
 
-  const getNameCountry = (id) => {
-    const country = countries.find((country) => country.id === id);
-    return country.commonName;
-  };
+  useEffect(() => {
+    if (currentActivity.hasOwnProperty("description")) {
+      setActivity({
+        ...currentActivity,
+        countries: currentActivity.Countries.map((country) => country.id),
+      });
+    }
+  }, [currentActivity]);
+
   return (
-    <div className={styled.modal}>
-      <div className={styled.contentModal}>
-        <div className={styled.formModal}>
-          <form action="" className={styled.formActivity}>
-            <div className={styled.boxGroup}>
+    <div className={styled.containerModal}>
+      <div className={styled.modal}>
+        <div className={styled.modalHeader}>
+          <h2>
+            {currentActivity.hasOwnProperty("description")
+              ? "Editar "
+              : "Crear "}
+            Actividad
+          </h2>
+
+          <button className={styled.btnClose} onClick={handleModal}>
+            <FontAwesomeIcon icon={faClose} />
+          </button>
+        </div>
+
+        <div className={styled.modalBody}>
+          <form className={styled.form} onSubmit={handleSubmit}>
+            <div className={styled.formGroup}>
               <label htmlFor="" className={styled.formLabel}>
                 Descripción
               </label>
-              <div className={styled.formGroup}>
-                <div className={styled.boxIcon}>
+              <div className={styled.inputGroup}>
+                <div className={styled.inputIcon}>
                   <FontAwesomeIcon icon={faList} />
                 </div>
                 <input
                   type="text"
                   name="description"
-                  className={styled.formField}
+                  className={styled.inputField}
                   onChange={handleChange}
+                  value={activity.description}
                 />
               </div>
             </div>
-
-            <div className={styled.boxGroup}>
+            <div className={styled.formGroup}>
               <label htmlFor="" className={styled.formLabel}>
                 Dificultad
               </label>
-              <div className={styled.formGroup}>
-                <div className={styled.boxIcon}>
+              <div className={styled.inputGroup}>
+                <div className={styled.inputIcon}>
                   <FontAwesomeIcon icon={faSliders} />
                 </div>
-                <input
-                  type="number"
-                  className={styled.formField}
+                <select
                   name="difficulty"
                   onChange={handleChange}
-                />
+                  className={styled.inputField}
+                  defaultValue={
+                    (currentActivity.difficulty &&
+                      currentActivity.difficulty.toString()) ||
+                    "null"
+                  }
+                >
+                  <option value="null" disabled>
+                    -- Seleccione la dificultad de la actividad --
+                  </option>
+                  <option value="1">1 - Fácil</option>
+                  <option value="2">2 - Moderado</option>
+                  <option value="3">3 - Intermedio</option>
+                  <option value="4">4 - Díficil</option>
+                  <option value="5">5 - Experto</option>
+                </select>
               </div>
             </div>
-
-            <div className={styled.boxGroup}>
+            <div className={styled.formGroup}>
               <label htmlFor="" className={styled.formLabel}>
-                Duración
+                Duración (hrs)
               </label>
-              <div className={styled.formGroup}>
-                <div className={styled.boxIcon}>
+              <div className={styled.inputGroup}>
+                <div className={styled.inputIcon}>
                   <FontAwesomeIcon icon={faClock} />
                 </div>
                 <input
                   type="number"
+                  className={styled.inputField}
                   name="duration"
                   onChange={handleChange}
-                  className={styled.formField}
+                  value={activity.duration}
+                  min={1}
+                  max={24}
                 />
               </div>
             </div>
-
-            <div className={styled.boxGroup}>
+            <div className={styled.formGroup}>
               <label htmlFor="" className={styled.formLabel}>
                 Temporada
               </label>
-              <div className={styled.formGroup}>
-                <div className={styled.boxIcon}>
+              <div className={styled.inputGroup}>
+                <div className={styled.inputIcon}>
                   <FontAwesomeIcon icon={faCalendar} />
                 </div>
                 <select
                   name="season"
                   onChange={handleChange}
-                  className={styled.formField}
+                  className={styled.inputField}
+                  defaultValue={"null"}
                 >
-                  <option value="null">-- Seleccione la estación --</option>
+                  <option value="null" disabled>
+                    -- Seleccione una estación del año --
+                  </option>
                   <option value="Invierno">Invierno</option>
                   <option value="Otoño">Otoño</option>
                   <option value="Primavera">Primavera</option>
@@ -129,78 +208,50 @@ export const Modal = () => {
                 </select>
               </div>
             </div>
-
-            <div className={styled.boxGroup}>
+            <div className={styled.formGroup}>
               <label htmlFor="" className={styled.formLabel}>
-                Lugar
+                Ubicación
               </label>
-              <div className={styled.formGroup}>
-                <div className={styled.boxIcon}>
+              <div className={styled.inputGroup}>
+                <div className={styled.inputIcon}>
                   <FontAwesomeIcon icon={faEarth} />
                 </div>
                 <select
                   name="countries"
-                  id=""
-                  className={styled.formField}
-                  onChange={handleCountry}
+                  onChange={handleChange}
+                  className={styled.inputField}
+                  defaultValue={"null"}
                 >
-                  <option value="null">-- Seleccione el país --</option>
+                  <option value="null" disabled>
+                    -- Seleccione la ubicación --
+                  </option>
                   {countries.map((country) => (
-                    <option key={country.id} value={country.id}>
+                    <option value={country.id} key={country.id}>
                       {country.commonName}
                     </option>
                   ))}
                 </select>
               </div>
             </div>
-            <div className={styled.boxButton}>
-              <button className={styled.btnSave}>
+
+            <div className={styled.buttons}>
+              <button
+                className={`${styled.btn} ${styled.btnReset}`}
+                onClick={resetForm}
+                type="button"
+              >
+                <FontAwesomeIcon icon={faRefresh} />
+                Limpiar
+              </button>
+              <button
+                type="submit"
+                className={`${styled.btn} ${styled.btnSave}`}
+              >
                 <FontAwesomeIcon icon={faSave} />
-                <span>Guardar</span>
+                Guardar
               </button>
             </div>
           </form>
-        </div>
-        <div className={styled.cardModal}>
-          <div className={styled.card}>
-            <div className={styled.cardInfo}>
-              <p className={styled.infoTitle}>Descripción</p>
-              <p className={styled.infoValue}>
-                {activity.description ? activity.description : "Esperando..."}
-              </p>
-            </div>
-            <div className={styled.cardInfo}>
-              <p className={styled.infoTitle}>Dificultad</p>
-              <p className={styled.infoValue}>
-                {activity.difficulty ? activity.difficulty : "Esperando..."}
-              </p>
-            </div>
-            <div className={styled.cardInfo}>
-              <p className={styled.infoTitle}>Duración</p>
-              <p className={styled.infoValue}>
-                {activity.duration ? activity.duration : "Esperando..."}
-              </p>
-            </div>
-            <div className={styled.cardInfo}>
-              <p className={styled.infoTitle}>Temporada</p>
-              <p className={styled.infoValue}>
-                {activity.season ? activity.season : "Esperando..."}
-              </p>
-            </div>
-            <div className={styled.cardInfo}>
-              <p className={styled.infoTitle}>
-                {activity.countries.length > 1 ? "Lugares" : "Lugar"}
-              </p>
-              <div className={styled.countries}>
-                {activity.countries.map((country, idx) => (
-                  <div className={styled.country} key={idx}>
-                    <span>{getNameCountry(country)}</span>
-                    <FontAwesomeIcon icon={faClose} />
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
