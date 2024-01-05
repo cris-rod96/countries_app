@@ -3,12 +3,12 @@ import helpers from "../../helpers/index.helpers.js";
 const { verifyPassword } = helpers.bcryptHelpers;
 const { generateToken } = helpers.jwtHelpers;
 const { loginNotification } = helpers.emailHelper;
+
 const { User } = connection.models;
 
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log(email, password);
     const user = await User.findOne({
       where: {
         email,

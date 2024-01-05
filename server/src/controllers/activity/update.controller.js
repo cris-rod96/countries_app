@@ -6,12 +6,12 @@ const main = async (req, res) => {
     const { id } = req.params;
     const updateActivity = await Activity.update(
       {
+        ...req.body,
+      },
+      {
         where: {
           id,
         },
-      },
-      {
-        ...req.body,
       }
     );
 

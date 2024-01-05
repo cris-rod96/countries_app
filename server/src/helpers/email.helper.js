@@ -57,7 +57,28 @@ const loginNotification = async (emailTo, user, date) => {
   }
 };
 
+const sendCode = async (to, code) => {
+  try {
+    const html = fs
+      .readFileSync("./src/templates/recovery.html")
+      .toString()
+      .replace("${dynamic_string}", code);
+
+    const mailOptions = {
+      from: GMAIL_SECRET_EMAIL,
+      to,
+      subject: "Solicitud de Cambio de Contraseña",
+      html,
+    };
+    await transporter.sendMail(mailOptions);
+    return true;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
 export default {
   welcomeAndValidate,
   loginNotification,
+  sendCode,
 };

@@ -43,6 +43,10 @@ const byName = async (req, res) => {
       },
       include: [Activity],
     });
+    return res.status(200).json({
+      countries,
+      total: countries.length,
+    });
   } catch ({ message }) {
     return res.status(500).json({ message });
   }

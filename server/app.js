@@ -9,7 +9,7 @@ const { conn } = database;
 const { SERVER_PORT } = env;
 
 conn
-  .sync({ logging: false, force: true })
+  .sync({ logging: false, force: false })
   .then(() => {
     server.listen(SERVER_PORT, () => {
       console.log(`Server escuchando por el puerto: ${SERVER_PORT}`);

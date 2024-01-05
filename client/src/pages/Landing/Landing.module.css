@@ -188,6 +188,7 @@
   justify-content: flex-end;
 }
 .link {
+  color: #293050;
   font-size: 14px;
   cursor: pointer;
 }

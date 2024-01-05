@@ -39,6 +39,10 @@ const model = (sequelize) => {
         allowNull: false,
       },
 
+      codeRecovery: {
+        type: DataTypes.STRING,
+      },
+
       isActive: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,

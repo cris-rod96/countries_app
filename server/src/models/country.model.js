@@ -53,14 +53,14 @@ const model = (sequelize) => {
             msg: "La URL de la bandera no es una URL válida",
           },
         },
-        location: {
-          type: DataTypes.STRING,
-          allowNull: false,
-          validate: {
-            isUrl: {
-              args: true,
-              msg: "La URL del mapa no es una URL válida",
-            },
+      },
+      location: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          isUrl: {
+            args: true,
+            msg: "La URL del mapa no es una URL válida",
           },
         },
       },

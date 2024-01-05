@@ -13,6 +13,6 @@ const router = express.Router();
 router.use("/activity", isValidToken, activityRoutes);
 router.use("/countries", countryRoutes);
 router.use("/auth", authRoutes);
-router.use("/message", isValidToken, isAdmin, messageRoutes);
+router.use("/message", isValidToken, messageRoutes);
 router.use("/users", userRoutes);
 export default router;

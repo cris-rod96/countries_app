@@ -50,6 +50,11 @@ const model = (sequelize) => {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
       },
+
+      createdAt: {
+        type: DataTypes.DATEONLY,
+        defaultValue: sequelize.literal("CURRENT_DATE"),
+      },
     },
     {
       timestamps: false,

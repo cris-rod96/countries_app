@@ -6,6 +6,7 @@ import {
 import { faLock, faSpider, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useLoginForm } from "../../hooks/useLoginForm";
+import { NavLink } from "react-router-dom";
 export const FormLogin = (props) => {
   const {
     styled,
@@ -98,9 +99,9 @@ export const FormLogin = (props) => {
           </div>
 
           <div className={styled.formLink}>
-            <a href="" className={styled.link}>
+            <NavLink to={"/recovery"} className={styled.link}>
               ¿Olvidaste tu contraseña?
-            </a>
+            </NavLink>
           </div>
           <button className={`${styled.btnLogin}`}>
             {loading ? (

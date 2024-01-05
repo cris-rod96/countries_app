@@ -19,6 +19,9 @@ export const Modal = ({
   currentActivity,
   handleToast,
   setToast,
+  createActivity,
+  typeRequest,
+  putActivity,
 }) => {
   const countries = storage.getStorage("countries");
 
@@ -29,14 +32,6 @@ export const Modal = ({
     season: "",
     countries: [],
   });
-
-  const difficulties = {
-    1: "Fácil",
-    2: "Moderado",
-    3: "Intermedio",
-    4: "Díficil",
-    5: "Experto",
-  };
 
   const resetForm = () => {
     setActivity({
@@ -78,18 +73,18 @@ export const Modal = ({
     e.preventDefault();
     const values = Object.values(activity);
     if (isValidForm(values)) {
-      const response = await activityService.createActivity(activity);
-      setToast({
-        ...response,
-      });
+      if (typeRequest === "post") {
+        createActivity(activity);
+      } else {
+        putActivity(activity, currentActivity.id);
+      }
       resetForm();
     } else {
-      setToast({
+      createActivity(null, {
         type: "error",
-        message: "Todos los campos son obligatorios",
+        message: "Todos los campos on obligatorios",
       });
     }
-    handleToast();
   };
 
   useEffect(() => {

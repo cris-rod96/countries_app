@@ -7,6 +7,7 @@ const { jwtHelpers } = helpers;
 const isValidToken = async (req = request, res = response, next) => {
   const token = req.headers["x-token"];
 
+  console.log(token);
   if (!token)
     return res
       .status(401)

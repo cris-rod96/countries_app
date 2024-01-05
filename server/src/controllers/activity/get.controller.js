@@ -10,6 +10,7 @@ const all = async (req, res) => {
         userId: id,
       },
       include: [Country],
+      order: [["isCompleted", "ASC"]],
     });
     return res.status(200).json({
       activities,

@@ -8,7 +8,7 @@ const main = async (req, res) => {
     await activity.addCountry(countries);
     return res
       .status(200)
-      .json({ message: "La actividad ha sido creado exitosamente" });
+      .json({ message: "La actividad ha sido creada exitosamente" });
   } catch ({ message }) {
     return res.status(500).json({ message });
   }

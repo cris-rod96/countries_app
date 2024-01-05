@@ -18,9 +18,60 @@
 .menu {
   height: 100%;
   display: flex;
+  align-items: center;
+}
+
+.full {
+  height: 100%;
+  display: flex;
   justify-content: center;
   gap: 30px;
   align-items: center;
+}
+
+.btnMenu {
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.boxMenu {
+  position: fixed;
+  background-color: rgba(247, 237, 237, 0.9);
+  width: 300px;
+  top: 0;
+  left: -100%;
+  height: 100%;
+  z-index: 1000;
+  transition: all 0.4s linear;
+}
+.showMenu {
+  left: 0;
+}
+
+.btnClose {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 30px;
+  color: black;
+}
+
+.items {
+  width: 100%;
+  position: absolute;
+  top: 50px;
+}
+.items > .menuItem {
+  height: 60px;
+  color: #293050;
+}
+.items > .menuItem:hover {
+  background-color: #36373a;
+  color: white;
+}
+
+.movil {
+  display: none;
 }
 
 .menuItem {
@@ -91,4 +142,49 @@
 
 .icon:active {
   transform: scale(0.9);
+}
+
+.active {
+  color: wheat;
+}
+.btnLogout {
+  height: 50px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  color: #293050;
+}
+
+.btnLogout:hover {
+  background-color: #36373a;
+  color: white;
+}
+/* Medias */
+@media (width < 1000px) {
+  .fixed {
+    position: fixed;
+  }
+  .full {
+    display: none;
+  }
+  .movil {
+    display: block;
+  }
+
+  .active {
+    background-color: #36373a;
+    color: white !important;
+  }
+
+  .boxLogout {
+    display: none;
+  }
+
+  .logout {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+  }
 }

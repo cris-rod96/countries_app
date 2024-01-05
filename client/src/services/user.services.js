@@ -21,7 +21,17 @@ const validationAccount = async (code) => {
   return data;
 };
 
+const forgotPassword = async (email) => {
+  try {
+    const { data } = await axios.post(`${URL_BACK}/users/forgotPassword`, {
+      email,
+    });
+    return data;
+  } catch (error) {}
+};
+
 export default {
   handleSubmit,
   validationAccount,
+  forgotPassword,
 };

@@ -11,7 +11,15 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 export const Table = (props) => {
-  const { activities, handleUpdate, setCurrentActivity, handleModal } = props;
+  const {
+    activities,
+    handleUpdate,
+    setCurrentActivity,
+    handleModal,
+    setShowDialog,
+    setIdActivity,
+    setTypeRequest,
+  } = props;
   const [updating, setUpdating] = useState(false);
   const [idUpdate, setIdUpdate] = useState("");
   const difficulties = {
@@ -50,16 +58,29 @@ export const Table = (props) => {
     setCurrentActivity({
       ...activity,
     });
+    handleRequest("put");
     handleModal();
+  };
+
+  const handleDelete = (id) => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+    setShowDialog(true);
+    setIdActivity(id);
+  };
+
+  const handleRequest = (request) => {
+    setTypeRequest(request);
   };
 
   return (
     <table className={`${styled.table}`}>
       <thead className={styled.thead}>
         <tr>
-          <th>
-            Descripción <FontAwesomeIcon icon={faCaretDown} />
-          </th>
+          <th>Descripción</th>
           <th>Dificultad</th>
           <th>Duración</th>
           <th>Temporada</th>
@@ -106,7 +127,10 @@ export const Table = (props) => {
                     onClick={() => selectActivity(activity)}
                   />
                 </button>
-                <button className={`${styled.btn} ${styled.btnDelete}`}>
+                <button
+                  className={`${styled.btn} ${styled.btnDelete}`}
+                  onClick={() => handleDelete(activity.id)}
+                >
                   <FontAwesomeIcon icon={faTrash} />
                 </button>
               </td>

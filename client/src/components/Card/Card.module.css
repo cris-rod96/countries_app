@@ -36,3 +36,10 @@
   background-color: rgba(0, 0, 0, 0.7);
   color: white;
 }
+
+@media (width < 450px) {
+  .card {
+    width: 300px;
+    background-color: red;
+  }
+}

@@ -6,6 +6,7 @@ import services from "./services/countries.services";
 import cookies from "./utils/cookies";
 function App() {
   const [countries, setCountries] = useState([]);
+  const [showMenu, setShowMenu] = useState(false);
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const token = cookies.getCookie("x-token");
@@ -24,6 +25,7 @@ function App() {
     }
     getCountries();
   }, []);
+
   const handleSearch = async (e) => {
     const { value } = e.target;
     const data = await services.getByName(value);
@@ -32,8 +34,14 @@ function App() {
 
   return (
     <>
-      {pathname !== "/" && <Nav handleSearch={handleSearch} />}{" "}
-      <Routing countries={countries} />
+      {pathname !== "/" && pathname !== "/recovery" && (
+        <Nav
+          handleSearch={handleSearch}
+          handleOpenMenu={setShowMenu}
+          navFixed={pathname === "/activity" ? true : false}
+        />
+      )}{" "}
+      <Routing countries={countries} showMenu={showMenu} />
     </>
   );
 }

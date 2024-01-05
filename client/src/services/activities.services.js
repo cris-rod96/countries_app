@@ -63,14 +63,42 @@ const updateActivity = async (activity, id) => {
         },
       }
     );
-    return true;
+    return {
+      type: "success",
+      message: data.message,
+    };
   } catch (error) {
-    return false;
+    return {
+      type: "error",
+      message: error.response.data.message,
+    };
+  }
+};
+
+const deleteActivity = async (id) => {
+  try {
+    const token = cookies.getCookie("x-token");
+
+    const { data } = await axios.delete(`${URL_BACK}/activity/delete/${id}`, {
+      headers: {
+        "x-token": token,
+      },
+    });
+    return {
+      type: "success",
+      message: data.message,
+    };
+  } catch (error) {
+    return {
+      type: "error",
+      message: error.response.data.message,
+    };
   }
 };
 
 export default {
   getActivities,
   createActivity,
+  deleteActivity,
   updateActivity,
 };
