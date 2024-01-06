@@ -27,7 +27,12 @@ const forgotPassword = async (email) => {
       email,
     });
     return data;
-  } catch (error) {}
+  } catch (error) {
+    return {
+      type: "error",
+      message: error.response.data.message,
+    };
+  }
 };
 
 export default {
